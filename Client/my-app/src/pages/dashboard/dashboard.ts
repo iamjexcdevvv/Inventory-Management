@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { SideNavigationComponent } from "../../shared/components/SideNavigation/side-navigation";
+import { SideNavigationComponent } from "../../shared/components/side-navigation/side-navigation";
 
 @Component({
     selector: "dashboard",

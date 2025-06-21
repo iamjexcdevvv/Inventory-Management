@@ -6,9 +6,8 @@
     </div>
 
     <nav
-        class="fixed z-50 top-0 h-screen w-[30%] bg-base-200 {{
-            showSideNavigation ? 'left-0' : '-left-full'
-        }} transition-all duration-300"
+        class="fixed z-50 top-0 h-screen w-[30%] bg-base-200 transition-all duration-300"
+        [ngClass]="showSideNavigation ? 'left-0' : '-left-full'"
     >
         <div class="flex justify-between p-3">
             <div>

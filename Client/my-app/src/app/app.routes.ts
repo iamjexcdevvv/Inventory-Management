@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { HomePageComponent } from "../pages/home/home-page";
-import { PageNotFoundComponent } from "../shared/components/PageNotFound/page-not-found";
+import { PageNotFoundComponent } from "../shared/components/page-not-found/page-not-found";
 
 export const routes: Routes = [
     {
@@ -24,7 +24,7 @@ export const routes: Routes = [
                 (c) => c.ProductManagementComponent
             ),
     },
-    {
+    { 
         path: "auth",
         children: [
             {
