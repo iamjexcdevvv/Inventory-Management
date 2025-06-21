@@ -33,9 +33,13 @@
             </button>
         </div>
 
-        <div class="space-y-3">
+        <form [formGroup]="userLoginForm" class="space-y-3">
+            @let isValid = userLoginForm.invalid;
+            @let emailControl = userLoginForm.controls.email;
+            @let passwordControl = userLoginForm.controls.password;
+
             <div>
-                <label class="input w-full validator">
+                <label class="input w-full">
                     <svg
                         class="h-[1em] opacity-50"
                         xmlns="http://www.w3.org/2000/svg"
@@ -61,18 +65,26 @@
                         </g>
                     </svg>
                     <input
+                        formControlName="email"
                         type="email"
                         placeholder="example@site.com"
                         required
                     />
                 </label>
-                <div class="validator-hint hidden">
-                    Enter valid email address
-                </div>
+                
+                @if (isValid && (userLoginForm.controls.email.dirty || userLoginForm.controls.email.touched)) {
+                    @if (emailControl.hasError("required"))
+                    {
+                        <p class="text-error text-xs">Email is required</p>
+                    }
+                    @else if (emailControl.hasError("email")) {
+                        <p class="text-error text-xs">Invalid email format</p>
+                    }
+                }
             </div>
 
             <div>
-                <label class="input w-full validator">
+                <label class="input w-full">
                     <svg
                         class="h-[1em] opacity-50"
                         xmlns="http://www.w3.org/2000/svg"
@@ -97,16 +109,19 @@
                         </g>
                     </svg>
                     <input
+                        formControlName="password"
                         type="password"
                         required
                         placeholder="Password"
-                        minlength="8"
-                        title="Must be more than 8 characters"
                     />
                 </label>
-                <p class="validator-hint hidden">
-                    Must be more than 8 characters
-                </p>
+                
+                @if (isValid && (userLoginForm.controls.password.dirty || userLoginForm.controls.password.touched)) {
+                    @if (passwordControl.hasError("required"))
+                    {
+                        <p class="text-error text-xs">Password is required</p>
+                    }
+                }
             </div>
 
             <div class="flex justify-between">
@@ -127,15 +142,15 @@
             </div>
 
             <div>
-                <button class="btn btn-primary w-full">Login</button>
+                <button [disabled]="userLoginForm.invalid" type="submit" class="btn btn-primary w-full">Login</button>
             </div>
 
             <div>
                 <p>
                     Not registered yet?
-                    <span><a>Create a new account</a></span>
+                    <span><a class="text-primary" routerLink="/auth/register">Create a new account</a></span>
                 </p>
             </div>
-        </div>
+        </form>
     </div>
 </section>
