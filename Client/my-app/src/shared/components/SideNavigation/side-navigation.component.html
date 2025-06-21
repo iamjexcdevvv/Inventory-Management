@@ -1,0 +1,39 @@
+<aside>
+    <div class="p-4">
+        <button (click)="toggleSideNav()">
+            <lucide-icon name="align-justify"></lucide-icon>
+        </button>
+    </div>
+
+    <nav
+        class="fixed z-50 top-0 h-screen w-[30%] bg-base-200 {{
+            showSideNavigation ? 'left-0' : '-left-full'
+        }} transition-all duration-300"
+    >
+        <div class="flex justify-between p-3">
+            <div>
+                <ul class="space-y-3">
+                    <li>
+                        <a class="text-xl" routerLink="/dashboard">Dashboard</a>
+                    </li>
+                    <li>
+                        <a class="text-xl" routerLink="/products">Products</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <button (click)="toggleSideNav()">
+                    <lucide-icon name="x"></lucide-icon>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    @if (showSideNavigation) {
+    <div
+        (click)="toggleSideNav()"
+        class="fixed z-40 top-0 left-0 w-full h-screen"
+    ></div>
+    }
+</aside>

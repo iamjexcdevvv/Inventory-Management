@@ -17,6 +17,14 @@ export const routes: Routes = [
             ),
     },
     {
+        path: "products",
+        title: "Products Page",
+        loadComponent: () =>
+            import("../pages/products/product-management").then(
+                (c) => c.ProductManagementComponent
+            ),
+    },
+    {
         path: "auth",
         children: [
             {
