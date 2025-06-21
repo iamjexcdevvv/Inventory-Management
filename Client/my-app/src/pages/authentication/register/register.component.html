@@ -33,26 +33,53 @@
             </button>
         </div>
 
-        <div class="space-y-3">
+        <form
+            (ngSubmit)="onSubmit()"
+            [formGroup]="userRegistrationForm"
+            class="space-y-3"
+        >
+            @let isValid = userRegistrationForm.invalid;
+
+            @let firstNameControl = userRegistrationForm.controls.firstName;
+            @let lastNameControl = userRegistrationForm.controls.lastName;
+            @let emailControl = userRegistrationForm.controls.email;
+            @let passwordControl = userRegistrationForm.controls.password;
+
             <div class="grid grid-cols-2 gap-3">
                 <div>
                     <input
+                        formControlName="firstName"
                         type="text"
                         placeholder="Enter your name"
                         class="input"
                     />
+
+                    @if (isValid && (userRegistrationForm.controls.firstName.dirty || userRegistrationForm.controls.firstName.touched)) { 
+                        @if (firstNameControl.hasError("required"))
+                        {
+                            <p class="text-error text-xs">First name is required</p>
+                        }
+                    }
                 </div>
 
                 <div>
                     <input
+                        formControlName="lastName"
                         type="text"
                         placeholder="Enter your last name"
                         class="input"
                     />
+
+                    @if (isValid && (userRegistrationForm.controls.lastName.dirty || userRegistrationForm.controls.lastName.touched)) {
+                        @if (lastNameControl.hasError("required"))
+                        {
+                            <p class="text-error text-xs">Last name is required</p>
+                        }
+                    }
                 </div>
 
                 <div class="col-span-2">
-                    <label class="input w-full validator">
+                    <label class="input w-full">
                         <svg
                             class="h-[1em] opacity-50"
                             xmlns="http://www.w3.org/2000/svg"
@@ -78,18 +105,26 @@
                             </g>
                         </svg>
                         <input
+                            formControlName="email"
                             type="email"
                             placeholder="example@site.com"
                             required
                         />
                     </label>
-                    <div class="validator-hint hidden">
-                        Enter valid email address
-                    </div>
+
+                    @if (isValid && (userRegistrationForm.controls.email.dirty || userRegistrationForm.controls.email.touched)) {
+                        @if (emailControl.hasError("required"))
+                        {
+                            <p class="text-error text-xs">Email is required</p>
+                        }
+                        @else if (emailControl.hasError("email")) {
+                            <p class="text-error text-xs">Invalid email format</p>
+                        }
+                    }
                 </div>
 
                 <div class="col-span-2">
-                    <label class="input w-full validator">
+                    <label class="input w-full">
                         <svg
                             class="h-[1em] opacity-50"
                             xmlns="http://www.w3.org/2000/svg"
@@ -114,36 +149,48 @@
                             </g>
                         </svg>
                         <input
+                            formControlName="password"
                             type="password"
                             required
                             placeholder="Password"
-                            minlength="8"
-                            title="Must be more than 8 characters"
                         />
                     </label>
-                    <p class="validator-hint hidden">
-                        Must be more than 8 characters
-                    </p>
+
+                    @if (isValid && (userRegistrationForm.controls.password.dirty || userRegistrationForm.controls.password.touched)) {
+                        @if (passwordControl.hasError("required"))
+                        {
+                            <p class="text-error text-xs">Password is required</p>
+                        }
+                        @else if (passwordControl.hasError("minlength")) {
+                            <p class="text-error text-xs">Password should contains at least 8 characters</p>
+                        }
+                    }
                 </div>
             </div>
 
             <div>
                 <label class="label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input formControlName="isTermsAndRegulationsAccepted" type="checkbox" checked="checked" class="checkbox" />
                     I agree to all terms, privacy policies, and fees
                 </label>
             </div>
 
             <div>
-                <button class="btn btn-primary w-full">Sign up</button>
+                <button
+                    [disabled]="userRegistrationForm.invalid"
+                    type="submit"
+                    class="btn btn-primary w-full"
+                >
+                    Sign up
+                </button>
             </div>
 
             <div>
                 <p>
                     Already have an account?
-                    <span><a>Login</a> </span>
+                    <span><a class="text-primary" routerLink="/auth/login">Login</a> </span>
                 </p>
             </div>
-        </div>
+        </form>
     </div>
 </section>
